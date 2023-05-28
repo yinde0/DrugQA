@@ -4,5 +4,3 @@ Fiona==1.9.3
 pydantic==1.10.8
 sentence-transformers==2.2.2
 sentencepiece==0.1.99
-conda==23.3.1
-conda-build==3.24.0
