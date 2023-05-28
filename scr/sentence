@@ -1,0 +1,11 @@
+fastapi==0.95.2
+uvicorn==0.22.0
+Fiona==1.9.3
+pydantic==1.10.8
+scipy==1.10.0
+torch==2.0.1
+torchvision==0.15.2
+sentence-transformers==2.2.2
+sentencepiece==0.1.99
+conda==23.3.1
+conda-build==3.24.0
