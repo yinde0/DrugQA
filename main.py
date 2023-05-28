@@ -19,12 +19,12 @@ import json
 
 app = FastAPI()
 
-modelPath = "model"
+modelPath = "scr/model"
 
 
 corpus = read_list()
 # Opening JSON file
-f = open('databank.json')
+f = open('scr/databank.json')
 # returns JSON object as a dictionary
 data_bank = json.load(f)
 
@@ -38,8 +38,8 @@ async def root():
 async def predict(prompt: str, focus: list):
     
     
-    print('prompt is ',prompt)
-    print('focus is ',focus)
+    #print('prompt is ',prompt)
+    #print('focus is ',focus)
     
     
 
