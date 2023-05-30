@@ -1,6 +1,3 @@
-import pandas as pd
-import numpy as np
-import matplotlib.pyplot as plt
 import random
 import torch
 from sentence_transformers import SentenceTransformer, util
@@ -19,14 +16,19 @@ import json
 
 app = FastAPI()
 
-modelPath = "model"
+modelPath = "scr/model"
 
 
 corpus = read_list()
 # Opening JSON file
-f = open('databank.json')
+f = open('scr/databank.json')
 # returns JSON object as a dictionary
 data_bank = json.load(f)
+
+columns = ['drug_name', 'medical_condition', 'side_effects', 'generic_name',
+           'drug_classes', 'brand_names', 'activity', 'rx_otc',
+           'pregnancy_category', 'csa', 'alcohol',
+           'medical_condition_description', 'rating', 'no_of_reviews']
 
 
 @app.get("/")
@@ -38,8 +40,8 @@ async def root():
 async def predict(prompt: str, focus: list):
     
     
-    print('prompt is ',prompt)
-    print('focus is ',focus)
+    #print('prompt is ',prompt)
+    #print('focus is ',focus)
     
     
 
@@ -69,8 +71,20 @@ async def predict(prompt: str, focus: list):
     sub_result = {}
 
     for i in focus:
-        result = work_data[i]
-        sub_result[i] = result
+        if i in columns:
+            result = work_data[i]
+            sub_result[i] = result
+        else:
+            result = 'Not a valid focus'
+            sub_result[i] = result
+            
+    for i in columns:
+        if i not in focus:
+            result = work_data[i]
+            sub_result[i] = result
+            
+        
+    
         
     final_result = {"result": 
                 [

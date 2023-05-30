@@ -1,0 +1,1 @@
+['drug_name', 'medical_condition', 'side_effects', 'generic_name','drug_classes', 'brand_names', 'activity', 'rx_otc','pregnancy_category', 'csa', 'alcohol','medical_condition_description', 'rating', 'no_of_reviews']
