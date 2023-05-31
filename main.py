@@ -16,14 +16,13 @@ import json
 
 app = FastAPI()
 
-modelPath = "scr/model"
+modelPath = "scr/model"   # Path to the saved model
 
 
-corpus = read_list()
-# Opening JSON file
-f = open('scr/databank.json')
-# returns JSON object as a dictionary
-data_bank = json.load(f)
+corpus = read_list() # List of drug names
+
+f = open('scr/databank.json') # Opening our saved JSON file
+data_bank = json.load(f) # Loading the JSON object as a dictionary
 
 columns = ['drug_name', 'medical_condition', 'side_effects', 'generic_name',
            'drug_classes', 'brand_names', 'activity', 'rx_otc',
@@ -39,52 +38,43 @@ async def root():
 @app.post("/extract_review")
 async def predict(prompt: str, focus: list):
     
-    
-    #print('prompt is ',prompt)
-    #print('focus is ',focus)
-    
-    
-
-
+    # Load the SentenceTransformer model
     model = SentenceTransformer(modelPath)
-    corpus_embeddings = model.encode(corpus, convert_to_tensor=True)  #encoding all the drug names
-
-    model.save(modelPath)
-    model = SentenceTransformer(modelPath)
+    
+    # Encode all the drug names in the corpus
+    corpus_embeddings = model.encode(corpus, convert_to_tensor=True) 
+    
     
     query_embedding = model.encode(prompt, convert_to_tensor=True)
 
     # We use cosine-similarity and torch.topk to find the highest scores
     top_k = 1
     cos_scores = util.cos_sim(query_embedding, corpus_embeddings)[0]
+    
     top_results = torch.topk(cos_scores, k=top_k)
     
-    score, idx = top_results[0], top_results[1]
+    score, idx = top_results[0], top_results[1]  # Get score and index
     
-    
-    drug_name = corpus[idx]
+    drug_name = corpus[idx]  # Retrieve the drug name
 
-    work_data = data_bank[drug_name]
+    work_data = data_bank[drug_name] # Extract information about the drug
 
-    focus = focus
+    focus = focus   # Major interest of the prompter
 
     sub_result = {}
 
     for i in focus:
         if i in columns:
-            result = work_data[i]
-            sub_result[i] = result
+            sub_result[i] = work_data[i]
+            
         else:
-            result = 'Not a valid focus'
-            sub_result[i] = result
+            sub_result[i] = 'Not a valid focus'   # Focus not in the column list.
+            
             
     for i in columns:
         if i not in focus:
-            result = work_data[i]
-            sub_result[i] = result
+            sub_result[i] = work_data[i]
             
-        
-    
         
     final_result = {"result": 
                 [
