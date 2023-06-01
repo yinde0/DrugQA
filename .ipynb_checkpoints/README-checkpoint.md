@@ -12,7 +12,6 @@ including side effects, drug classes, activity levels, pregnancy categories, and
 * Implementation of API usage and request/response formats.
 
 
-![Screenshot](src/cap1_1.png)
 ![alt text](https://github.com/yinde0/DrugQA/blob/main/scr/cap1_1.png?raw=true)
 
 ## How to replicate this project
@@ -23,3 +22,10 @@ The easiest was is to go through the notebooks
 2. install all dependencies in the requirement.txt
 3. run `uvicorn main:app --reload` inside DrugQA directory.
 4. Create a free account on <a href="https://render.com/" target="_blank">render</a>
+5. Push your codes to github 
+6. Connect your github to render, and deploy.
+
+## Issues you might encounter
+1. The model is quite large which might cause the inference time to increase, further work would be done to resolve this.
+
+

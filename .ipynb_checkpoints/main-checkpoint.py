@@ -68,7 +68,7 @@ async def predict(prompt: str, focus: list):
             sub_result[i] = work_data[i]
             
         else:
-            sub_result[i] = 'Not a valid focus'   # Focus not in the column list.
+            sub_result[i] = 'Not a valid focus'   # Focus not in the column 
             
             
     for i in columns:
