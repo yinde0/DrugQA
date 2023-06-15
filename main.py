@@ -18,6 +18,8 @@ app = FastAPI()
 
 modelPath = "scr/model"   # Path to the saved model
 
+# Load the SentenceTransformer model
+model = SentenceTransformer(modelPath)
 
 corpus = read_list() # List of drug names
 
@@ -38,8 +40,7 @@ async def root():
 @app.post("/extract_review")
 async def predict(prompt: str, focus: list):
     
-    # Load the SentenceTransformer model
-    model = SentenceTransformer(modelPath)
+    
     
     # Encode all the drug names in the corpus
     corpus_embeddings = model.encode(corpus, convert_to_tensor=True) 
